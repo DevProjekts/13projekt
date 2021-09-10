@@ -1,15 +1,9 @@
-"""Pacman, classic arcade game.
-Exercises
-1. Change the board.
-2. Change the number of ghosts.
-3. Change where pacman starts.
-4. Make the ghosts faster/slower.
-5. Make the ghosts smarter.
-"""
+#Pacman, classic arcade game.
+
 
 from random import choice
 from turtle import *
-
+#The link to the module https://pypi.org/project/freegames/
 from freegames import floor, vector
 
 state = {'score': 0}
@@ -48,9 +42,8 @@ tiles = [
 ]
 # fmt: on
 
-
+#We are drawing a square using path at (x, y)
 def square(x, y):
-    "Draw square using path at (x, y)."
     path.up()
     path.goto(x, y)
     path.down()
@@ -62,17 +55,15 @@ def square(x, y):
 
     path.end_fill()
 
-
+#We are ruturning the off set titels
 def offset(point):
-    "Return offset of point in tiles."
     x = (floor(point.x, 20) + 200) / 20
     y = (180 - floor(point.y, 20)) / 20
     index = int(x + y * 20)
     return index
 
-
+#We are returning True if the point is valid in tiles
 def valid(point):
-    "Return True if point is valid in tiles."
     index = offset(point)
 
     if tiles[index] == 0:
@@ -85,9 +76,8 @@ def valid(point):
 
     return point.x % 20 == 0 or point.y % 20 == 0
 
-
+#Drawing the world using path
 def world():
-    "Draw world using path."
     bgcolor('black')
     path.color('blue')
 
@@ -104,9 +94,8 @@ def world():
                 path.goto(x + 10, y + 10)
                 path.dot(2, 'white')
 
-
+#We are moving the pacman and all ghosts
 def move():
-    "Move pacman and all ghosts."
     writer.undo()
     writer.write(state['score'])
 
@@ -154,9 +143,8 @@ def move():
 
     ontimer(move, 100)
 
-
+#We are changing pacmans aim if it is valid
 def change(x, y):
-    "Change pacman aim if valid."
     if valid(pacman + vector(x, y)):
         aim.x = x
         aim.y = y
